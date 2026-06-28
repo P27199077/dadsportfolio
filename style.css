@@ -1,18 +1,18 @@
 /* Custom Stylesheet for Vikas Gupta Executive Portfolio */
 
 :root {
-    --bg-primary: #020617;
-    --bg-secondary: #0b1329;
-    --accent-primary: #38bdf8; /* Sky blue */
-    --accent-secondary: #0284c7; /* Indigo-ish blue */
-    --accent-orange: #f97316; /* Hyrox Orange for contrast */
+    --bg-primary: #050515; /* Obsidian Midnight Blue */
+    --bg-secondary: #0c0a25; /* Deep Royal Violet */
+    --accent-primary: #a855f7; /* Electric Purple */
+    --accent-secondary: #4f46e5; /* Deep Indigo Blue */
+    --accent-orange: #ec4899; /* Vibrant Pink/Magenta for contrast */
     --text-primary: #f8fafc;
     --text-muted: #94a3b8;
-    --glass-bg: rgba(15, 23, 42, 0.45);
+    --glass-bg: rgba(12, 10, 37, 0.45);
     --glass-border: rgba(255, 255, 255, 0.08);
     --font-heading: 'Space Grotesk', sans-serif;
     --font-body: 'Plus Jakarta Sans', sans-serif;
-    --shadow-glow: 0 0 25px rgba(56, 189, 248, 0.15);
+    --shadow-glow: 0 0 25px rgba(168, 85, 247, 0.15);
     --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -45,7 +45,7 @@ body {
 .blob-1 {
     width: 500px;
     height: 500px;
-    background: radial-gradient(circle, var(--accent-primary) 0%, rgba(2, 132, 199, 0) 70%);
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.45) 0%, rgba(168, 85, 247, 0) 70%);
     top: -100px;
     right: -100px;
 }
@@ -53,7 +53,7 @@ body {
 .blob-2 {
     width: 600px;
     height: 600px;
-    background: radial-gradient(circle, rgba(142, 68, 173, 0.6) 0%, rgba(142, 68, 173, 0) 70%);
+    background: radial-gradient(circle, rgba(79, 70, 229, 0.4) 0%, rgba(79, 70, 229, 0) 70%);
     bottom: 10%;
     left: -200px;
     animation-delay: -5s;
@@ -62,7 +62,7 @@ body {
 .blob-3 {
     width: 400px;
     height: 400px;
-    background: radial-gradient(circle, var(--accent-orange) 0%, rgba(249, 115, 22, 0) 70%);
+    background: radial-gradient(circle, rgba(236, 72, 153, 0.3) 0%, rgba(236, 72, 153, 0) 70%);
     bottom: -100px;
     right: 10%;
     animation-delay: -10s;
@@ -81,7 +81,7 @@ h1, h2, h3, h4 {
 }
 
 .gradient-text {
-    background: linear-gradient(135deg, var(--accent-primary) 30%, #a855f7 100%);
+    background: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-primary) 50%, var(--accent-orange) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -324,7 +324,7 @@ section {
     left: 2px;
     width: calc(100% - 4px);
     height: calc(100% - 4px);
-    background: linear-gradient(135deg, #1e293b, #334155);
+    background: linear-gradient(135deg, #1e1b4b, #311042);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -536,7 +536,7 @@ section {
 }
 
 .tab-btn.active {
-    background: linear-gradient(135deg, rgba(56, 189, 248, 0.08), rgba(2, 132, 199, 0.03));
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.08), rgba(79, 70, 229, 0.03));
     border-color: var(--accent-primary);
     color: var(--accent-primary);
     box-shadow: var(--shadow-glow);
@@ -687,7 +687,7 @@ section {
 
 /* Six Sigma Badge */
 .sig-sigma-badge {
-    background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(56, 189, 248, 0.1));
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(79, 70, 229, 0.1));
     border: 1px solid rgba(168, 85, 247, 0.2);
     border-radius: 20px;
     padding: 3rem 2rem;
