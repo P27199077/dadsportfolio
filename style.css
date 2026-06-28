@@ -739,56 +739,204 @@ section {
 }
 
 /* Experience Timeline Section */
-.timeline-container {
-    position: relative;
-    max-width: 900px;
-    margin: 0 auto;
+.timeline-section {
+    overflow: visible; /* Ensure popups are not cut off */
 }
 
+.timeline-container {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 12rem 1rem;
+    min-height: 480px;
+    align-items: center; /* Center items on the horizontal line */
+}
+
+/* Hide scrollbar on desktop since no scroll is needed */
+.timeline-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Single continuous horizontal track line */
 .timeline-line {
+    display: block;
     position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 2px;
-    background: rgba(255, 255, 255, 0.08);
-    transform: translateX(-50%);
+    top: 50%;
+    left: 90px; /* Offset to start after the "Recent" label */
+    right: 90px; /* Offset to end before the "Past" label */
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-secondary), var(--accent-primary), var(--accent-orange));
+    transform: translateY(-50%);
+    z-index: 1;
+    pointer-events: none; /* Let clicks pass through to container */
+}
+
+/* Timeline direction arrow pointing to the left (Recent) */
+.timeline-arrow-left {
+    position: absolute;
+    left: -4px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-right: 9px solid var(--accent-secondary);
+}
+
+/* Timeline labels at both ends */
+.timeline-endpoint {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    z-index: 2;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow-glow);
+}
+
+.endpoint-recent {
+    left: 0;
+    color: var(--accent-primary);
+    background: rgba(168, 85, 247, 0.08);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+.endpoint-past {
+    right: 0;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .timeline-item {
     position: relative;
-    width: 50%;
-    padding: 2rem;
+    flex: 0 0 160px; /* Width of each node on the axis */
+    scroll-snap-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: visible; /* Crucial for popups */
 }
-
-.timeline-item.left { left: 0; padding-right: 3rem; }
-.timeline-item.right { left: 50%; padding-left: 3rem; }
 
 .timeline-dot {
     position: absolute;
-    top: 2.7rem;
-    width: 14px;
-    height: 14px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
     background: var(--bg-primary);
-    border: 2px solid var(--accent-primary);
-    box-shadow: 0 0 10px var(--accent-primary);
+    border: 3px solid var(--accent-primary);
+    box-shadow: 0 0 12px rgba(168, 85, 247, 0.5);
+    z-index: 3;
+    transition: var(--transition-smooth);
+    cursor: pointer;
+}
+
+.timeline-item:hover .timeline-dot {
+    background: var(--accent-primary);
+    transform: translate(-50%, -50%) scale(1.4);
+    box-shadow: 0 0 20px var(--accent-primary);
+}
+
+/* Timeline labels alternating above and below the dot */
+.timeline-label {
+    position: absolute;
+    width: 220px;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition-smooth);
     z-index: 2;
 }
 
-.timeline-item.left .timeline-dot { right: -7px; }
-.timeline-item.right .timeline-dot { left: -7px; }
-
-.timeline-card {
-    padding: 1.8rem;
-    transition: var(--transition-smooth);
-    border: 1px solid var(--glass-border);
+/* Odd nodes -> Label is positioned above the dot */
+.timeline-item:nth-child(odd) .timeline-label {
+    bottom: 25px; /* distance above dot */
 }
 
-.timeline-card:hover {
-    transform: translateY(-5px);
-    border-color: rgba(56, 189, 248, 0.25);
-    box-shadow: 0 10px 30px rgba(56, 189, 248, 0.08);
+/* Even nodes -> Label is positioned below the dot */
+.timeline-item:nth-child(even) .timeline-label {
+    top: 25px; /* distance below dot */
+}
+
+.timeline-label h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.2rem;
+    transition: var(--transition-smooth);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.timeline-label span {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: block;
+}
+
+.timeline-item:hover .timeline-label h4 {
+    color: var(--accent-primary);
+    text-shadow: 0 0 8px rgba(168, 85, 247, 0.4);
+}
+
+/* The Popup Card detailing the job */
+.timeline-card {
+    position: absolute;
+    width: 320px;
+    padding: 1.5rem;
+    background: rgba(10, 8, 30, 0.96); /* Solid dark violet glass bg */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    z-index: 10;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), var(--shadow-glow);
+    text-align: left;
+}
+
+/* Hovering over the item triggers the popup */
+.timeline-item:hover .timeline-card {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* Odd item popup (label above line) -> displays below line */
+.timeline-item:nth-child(odd) .timeline-card {
+    top: 40px;
+    transform: translate(-50%, 15px);
+    left: 50%;
+}
+.timeline-item:nth-child(odd):hover .timeline-card {
+    transform: translate(-50%, 0);
+}
+
+/* Even item popup (label below line) -> displays above line */
+.timeline-item:nth-child(even) .timeline-card {
+    bottom: 40px;
+    transform: translate(-50%, -15px);
+    left: 50%;
+}
+.timeline-item:nth-child(even):hover .timeline-card {
+    transform: translate(-50%, 0);
 }
 
 .card-header {
@@ -816,21 +964,22 @@ section {
 }
 
 .timeline-card h3 {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     margin-bottom: 0.3rem;
+    color: var(--text-primary);
 }
 
 .job-meta {
     font-size: 0.8rem;
     color: var(--text-muted);
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
     font-weight: 500;
 }
 
 .job-desc {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: var(--text-muted);
-    line-height: 1.6;
+    line-height: 1.5;
 }
 
 /* Education Grid */
@@ -1106,17 +1255,19 @@ section {
     .section-title {
         font-size: 2.2rem;
     }
-    .timeline-line {
-        left: 20px;
+    .timeline-container {
+        justify-content: flex-start;
+        overflow-x: auto;
+        gap: 6rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+    .timeline-container::-webkit-scrollbar {
+        display: block;
+        height: 6px;
     }
     .timeline-item {
-        width: 100%;
-        padding-left: 45px !important;
-        padding-right: 0 !important;
-        left: 0 !important;
-    }
-    .timeline-dot {
-        left: 13px !important;
+        flex: 0 0 140px;
     }
     .tab-grid {
         grid-template-columns: 1fr;
